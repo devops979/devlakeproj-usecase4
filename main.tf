@@ -50,19 +50,19 @@ module "devlake" {
 
 module "alb" {
   source                = "./modules/alb"
-  name                  = "web-lb"
+  name                  = "devlake-lb"
   security_group_id     = module.security_groups.web_sg_id
   subnet_ids            = module.network.public_subnets_id
-  target_group_name     = "web-target-group"
+  target_group_name     = "devlake-target-group"
   target_group_port     = 4000
   target_group_protocol = "HTTP"
   vpc_id                = module.network.vpc_id
   health_check_path     = "/"
   health_check_protocol = "HTTP"
-  health_check_interval = 30
-  health_check_timeout  = 5
-  healthy_threshold     = 2
-  unhealthy_threshold   = 2
+  health_check_interval = 60
+  health_check_timeout  = 10
+  healthy_threshold     = 3
+  unhealthy_threshold   = 5
   listener_port         = 80
   listener_protocol     = "HTTP"
   target_ids            = module.devlake.instance_id
