@@ -32,18 +32,7 @@ module "devlake" {
   public_subnets = module.network.public_subnets_id[1]
   instance_type  = var.instance_type
   project_name   = "demo-instance-devlake"
-
-  user_data = <<-EOF
-              #!/bin/bash
-              sudo apt-get update -y
-              sudo apt-get install -y docker.io ncdu curl
-              sudo systemctl start docker
-              sudo git clone https://github.com/devops979/devlakeproj-usecase4.git
-              sudo cd devlakeproj-usecase4
-              sudo curl -SL https://github.com/docker/compose/releases/download/v2.33.1/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
-              sudo chmod +x /usr/local/bin/docker-compose
-              sudo docker-compose up -d
-              EOF
+  associate_public_ip_address = true
 }
 
 
