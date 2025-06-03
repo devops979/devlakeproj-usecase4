@@ -32,26 +32,6 @@ module "devlake" {
   public_subnets = module.network.public_subnets_id[1]
   instance_type  = var.instance_type
   project_name   = "demo-instance-devlake"
-  user_data = <<-EOT
-              #!/bin/bash
-              set -e
-              
-              # Install Docker CE
-              sudo apt-get update -y
-              sudo apt-get install -y ca-certificates curl
-              sudo install -m 0755 -d /etc/apt/keyrings
-              sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-              sudo chmod a+r /etc/apt/keyrings/docker.asc
-              echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-                sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-              sudo apt-get update -y
-              sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-              
-              # Clone and launch (no need to install docker-compose separately)
-              git clone https://github.com/devops979/devlakeproj-usecase4.git
-              cd devlakeproj-usecase4
-              sudo docker compose up -d  # Note: modern Docker has compose built-in
-              EOT
 }
 
 
