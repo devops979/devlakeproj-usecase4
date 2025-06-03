@@ -35,14 +35,14 @@ module "devlake" {
 
   user_data = <<-EOF
               #!/bin/bash
-              apt-get update -y
-              apt-get install -y docker.io
-              systemctl start docker
-              git clone https://github.com/devops979/devlakeproj-usecase4.git
-              cd devlakeproj-usecase4
-              curl -SL https://github.com/docker/compose/releases/download/v2.33.1/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
-              chmod +x /usr/local/bin/docker-compose
-              docker-compose up -d
+              sudo apt-get update -y
+              sudo apt-get install -y docker.io ncdu
+              sudo systemctl start docker
+              sudo git clone https://github.com/devops979/devlakeproj-usecase4.git
+              sudo cd devlakeproj-usecase4
+              sudo curl -SL https://github.com/docker/compose/releases/download/v2.33.1/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+              sudo chmod +x /usr/local/bin/docker-compose
+              sudo docker-compose up -d
               EOF
 }
 
@@ -63,7 +63,7 @@ module "alb" {
   health_check_timeout  = 5
   healthy_threshold     = 2
   unhealthy_threshold   = 2
-  listener_port         = 80
+  listener_port         = 4000
   listener_protocol     = "HTTP"
   target_ids            = module.devlake.instance_id
   tags                  = var.tags
