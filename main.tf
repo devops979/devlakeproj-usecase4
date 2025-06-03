@@ -36,7 +36,7 @@ module "devlake" {
   user_data = <<-EOF
               #!/bin/bash
               sudo apt-get update -y
-              sudo apt-get install -y docker.io ncdu
+              sudo apt-get install -y docker.io ncdu curl
               sudo systemctl start docker
               sudo git clone https://github.com/devops979/devlakeproj-usecase4.git
               sudo cd devlakeproj-usecase4
