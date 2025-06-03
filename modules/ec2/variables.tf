@@ -24,12 +24,12 @@ variable "associate_public_ip_address" {
 
 }
 
-# variable "user_data" {
-#   description = "user_data scripts"
-#   type        = string
-#   default     = ""
+variable "user_data" {
+  description = "user_data scripts"
+  type        = string
+  default     = ""
 
-# }
+}
 
 variable "volume_size" {
   description = "Size of the root block device in GB"
