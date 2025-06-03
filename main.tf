@@ -54,7 +54,7 @@ module "alb" {
   security_group_id     = module.security_groups.web_sg_id
   subnet_ids            = module.network.public_subnets_id
   target_group_name     = "web-target-group"
-  target_group_port     = 80
+  target_group_port     = 4000
   target_group_protocol = "HTTP"
   vpc_id                = module.network.vpc_id
   health_check_path     = "/"
@@ -63,7 +63,7 @@ module "alb" {
   health_check_timeout  = 5
   healthy_threshold     = 2
   unhealthy_threshold   = 2
-  listener_port         = 4000
+  listener_port         = 80
   listener_protocol     = "HTTP"
   target_ids            = module.devlake.instance_id
   tags                  = var.tags
