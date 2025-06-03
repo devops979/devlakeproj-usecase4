@@ -9,7 +9,7 @@ resource "aws_instance" "web-servers" {
     volume_size = var.volume_size # <-- increase this
     volume_type = var.volume_type
   }
-user_data = templatefile("${path.module}/user_data.sh", {})
+  user_data = templatefile("${path.module}/user_data.sh", {})
   tags = {
     Name = "${var.project_name}"
   }

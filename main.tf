@@ -32,7 +32,6 @@ module "devlake" {
   public_subnets = module.network.public_subnets_id[1]
   instance_type  = var.instance_type
   project_name   = "demo-instance-devlake"
-  associate_public_ip_address = true
 }
 
 
