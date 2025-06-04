@@ -10,8 +10,6 @@ terraform {
       version = "3.2.4"
     }
   }
-}
-
 
   backend "s3" {
     bucket = "demo-usecases-bucket-new"
