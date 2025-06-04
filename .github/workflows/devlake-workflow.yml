@@ -41,7 +41,8 @@ jobs:
           pip3 install checkov
 
       - name: Run Checkov
-        run: checkov -d . --framework terraform --soft-fail
+        run: 
+          checkov -d . --config-file .checkov.yml 
         working-directory: ./
   terraform_apply_destroy:
     runs-on: ubuntu-latest
