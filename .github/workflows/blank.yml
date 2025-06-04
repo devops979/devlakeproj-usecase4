@@ -1,0 +1,66 @@
+name: Terraform Infra
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Choose the Terraform action'
+        required: true
+        default: 'apply'  # Default action is apply
+        type: choice
+        options:
+          - apply
+          - destroy
+permissions:
+  contents: write
+  id-token: write
+ 
+jobs:
+    lint-and-security:
+    name: Lint and Security Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install TFLint
+        run: |
+          wget https://github.com/terraform-linters/tflint/releases/download/v0.50.2/tflint_linux_amd64.zip
+          unzip tflint_linux_amd64.zip
+          sudo mv tflint /usr/local/bin/
+          tflint --version
+
+      - name: Run TFLint
+        run: tflint --init && tflint -f compact
+        working-directory: ./
+
+      - name: Install Checkov
+        run: |
+          pip3 install --upgrade pip
+          pip3 install checkov
+
+      - name: Run Checkov
+        run: checkov -d . --framework terraform --soft-fail
+        working-directory: ./
+  terraform:
+    runs-on: ubuntu-latest
+    env:
+      TF_VAR_pem_file_path: ${{ github.workspace }}/deploy-key.pem
+ 
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+ 
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+ 
+      - name: Create SSH Key File
+        run: |
+          echo '${{ secrets.SSH_PRIVATE_KEY_B64 }}' | base64 -d > ${{ env.TF_VAR_pem_file_path }}
+          chmod 400 ${{ env.TF_VAR_pem_file_path }}  # Restrict permissions
+ 
+      - name: Terraform Init & Apply
+        run: |
+          terraform init
+          terraform apply -auto-approve
