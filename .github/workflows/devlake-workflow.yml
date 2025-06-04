@@ -45,6 +45,7 @@ jobs:
         working-directory: ./
   terraform_apply_destroy:
     runs-on: ubuntu-latest
+    needs: lint-and-security
     env:
       TF_VAR_pem_file_path: ${{ github.workspace }}/deploy-key.pem
  
