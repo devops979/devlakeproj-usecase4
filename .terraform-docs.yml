@@ -1,0 +1,22 @@
+
+formatter: markdown
+output:
+  file: README.md
+  mode: inject
+  escape: false
+settings:
+  indent: 2
+  sort: true
+  show: all
+sections:
+  show:
+    - header     # Includes the module header
+    - inputs     # Shows all input variables
+    - outputs    # Shows all output variables
+    - footer     # Includes the footer for additional context
+custom: |
+  ## terraform.tfvars Example
+  ```hcl
+  region      = "us-east-1"
+  environment = "dev"
+  instance_type = "t2.micro"
