@@ -17,32 +17,32 @@ permissions:
  
 jobs:
   lint-and-security:
-  name: Lint and Security Checks
-  runs-on: ubuntu-latest
+    name: Lint and Security Checks
+    runs-on: ubuntu-latest
 
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Install TFLint
-      run: |
-        wget https://github.com/terraform-linters/tflint/releases/download/v0.50.2/tflint_linux_amd64.zip
-        unzip tflint_linux_amd64.zip
-        sudo mv tflint /usr/local/bin/
-        tflint --version
+      - name: Install TFLint
+        run: |
+          wget https://github.com/terraform-linters/tflint/releases/download/v0.50.2/tflint_linux_amd64.zip
+          unzip tflint_linux_amd64.zip
+          sudo mv tflint /usr/local/bin/
+          tflint --version
 
-    - name: Run TFLint
-      run: tflint --init && tflint -f compact
-      working-directory: ./
+      - name: Run TFLint
+        run: tflint --init && tflint -f compact
+        working-directory: ./
 
-    - name: Install Checkov
-      run: |
-        pip3 install --upgrade pip
-        pip3 install checkov
+      - name: Install Checkov
+        run: |
+          pip3 install --upgrade pip
+          pip3 install checkov
 
-    - name: Run Checkov
-      run: checkov -d . --framework terraform --soft-fail
-      working-directory: ./
+      - name: Run Checkov
+        run: checkov -d . --framework terraform --soft-fail
+        working-directory: ./
   terraform_apply_destroy:
     runs-on: ubuntu-latest
     env:
