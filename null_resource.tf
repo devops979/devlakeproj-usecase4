@@ -2,13 +2,14 @@ resource "null_resource" "install_devlake" {
   triggers = {
     # Re-run if instance IP changes
     instance_id = module.devlake.instance_id
+    always_run  = timestamp()
   }
 
   connection {
     type        = "ssh"
     host        = module.devlake.public_ip
     user        = "ubuntu"
-    private_key = file("/mnt/c/Users/anilc/Downloads/pem_files/devops-tools.pem")
+    private_key = file(var.pem_file_path)
     timeout     = "10m"
   }
 
