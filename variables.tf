@@ -17,7 +17,9 @@ variable "public_subnet_cidrs" {
 }
 
 
-
+variable "pem_file_path" {
+  type = string  
+}
 
 
 variable "private_subnet_cidrs" {
