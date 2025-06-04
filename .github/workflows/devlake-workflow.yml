@@ -71,6 +71,11 @@ jobs:
         run: |
           echo '${{ secrets.SSH_PRIVATE_KEY_B64 }}' | base64 -d > ${{ env.TF_VAR_pem_file_path }}
           chmod 400 ${{ env.TF_VAR_pem_file_path }}  # Restrict permissions
+       
+      - name: Use SSH key 
+        run: |
+          export TF_VAR_pem_file_path=$(pwd)/deploy-key.pem
+   
  
       - name: Validate Terraform
         run: terraform validate
