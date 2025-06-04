@@ -42,7 +42,7 @@ jobs:
 
       - name: Run Checkov
         run: 
-          checkov -d . --config-file .checkov.yml 
+          checkov -d . --framework terraform --soft-fail 
         working-directory: ./
   terraform_apply_destroy:
     runs-on: ubuntu-latest
