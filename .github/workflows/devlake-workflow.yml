@@ -92,6 +92,7 @@ jobs:
         working-directory: ./
 
       - name: Generate Markdown Documentation
+        if: github.event_name == 'push' || github.event_name == 'pull_request'
         uses: terraform-docs/gh-actions@v1.3.0
         with:
           working-dir: ./
@@ -102,6 +103,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Configure Git
+        if: github.event_name == 'push' || github.event_name == 'pull_request'
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
